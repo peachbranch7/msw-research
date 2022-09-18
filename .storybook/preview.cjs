@@ -1,7 +1,18 @@
 import { initialize, mswDecorator } from 'msw-storybook-addon';
 import { rest } from 'msw';
-import getUsers from '../src/mocks/resolvers/User/getUsers';
-import registerUser from '../src/mocks/resolvers/User/registerUser';
+import getUsers from '../src/mocks/handlers/user/getUsersHandler';
+import registerUser from '../src/mocks/handlers/user/registerUserHandler';
+import { setupWorker } from 'msw';
+
+// Node 環境ではなくブラウザ環境にいることをチェック
+if (typeof global.process === 'undefined') {
+  // MSW をセットアップ
+  const worker = setupWorker();
+  // Service Worker を立ち上げる
+  worker.start();
+  // stories ファイルからアクセスできるように、worker をグローバルに参照できるようにする
+  window.msw = { worker };
+}
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },

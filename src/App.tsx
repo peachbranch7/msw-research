@@ -29,7 +29,7 @@ function App() {
   };
 
   useEffect(() => {
-    const getUsers = async () => {
+    (async () => {
       const response = await fetch(`/api/users`);
 
       if (!response.ok) {
@@ -37,8 +37,7 @@ function App() {
       } else {
         setUsers(await response.json());
       }
-    };
-    getUsers();
+    })();
   }, []);
 
   if (!users?.length) return <p>no data...</p>;

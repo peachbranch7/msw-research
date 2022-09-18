@@ -1,7 +1,7 @@
 import { ResponseResolver, MockedRequest, restContext } from 'msw';
-import users from '../../data/users.json';
+import users from './data.json';
 
-const registerUser: ResponseResolver<MockedRequest, typeof restContext> =
+const registerUserHandler: ResponseResolver<MockedRequest, typeof restContext> =
   async (req, res, ctx) => {
     const { id, name, age } = await req.json();
 
@@ -24,4 +24,4 @@ const registerUser: ResponseResolver<MockedRequest, typeof restContext> =
     );
   };
 
-export default registerUser;
+export default registerUserHandler;
